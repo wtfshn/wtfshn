@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Tuo Nome — Design, direzione artistica, ecc.</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #111;
+    --gray: #888;
+    --light-gray: #ddd;
+    --bg: #fafaf8;
+    --font-serif: 'EB Garamond', Georgia, serif;
+    --font-mono: 'Courier Prime', 'Courier New', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 2rem 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ── */
+  header {
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--black);
+  }
+
+  .header-name {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+  }
+
+  .header-name a {
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .header-name a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .header-tagline {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--black);
+    letter-spacing: 0.01em;
+  }
+
+  .header-tagline a {
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .header-tagline a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── NAV VIEWS ── */
+  .view-toggle {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .view-toggle a {
+    color: var(--gray);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .view-toggle a.active {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .view-toggle a:hover {
+    color: var(--black);
+  }
+
+  /* ── TABLE VIEW ── */
+  #view-list { display: block; }
+  #view-grid { display: none; }
+
+  .projects-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .projects-table thead tr {
+    border-bottom: 1px solid var(--black);
+  }
+
+  .projects-table th {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0.4rem 0.75rem 0.4rem 0;
+  }
+
+  .projects-table th:last-child { padding-right: 0; }
+
+  .projects-table td {
+    padding: 0.45rem 0.75rem 0.45rem 0;
+    vertical-align: top;
+    font-size: 13px;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .projects-table td:last-child { padding-right: 0; }
+
+  .projects-table tr:hover td {
+    background: rgba(0,0,0,0.025);
+  }
+
+  .projects-table td.title a {
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .projects-table td.title a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .projects-table td.kind {
+    color: var(--gray);
+    font-size: 12px;
+    max-width: 220px;
+  }
+
+  .projects-table td.client {
+    font-size: 12px;
+  }
+
+  .projects-table td.year {
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--gray);
+  }
+
+  /* ── GRID VIEW ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .grid-item {
+    cursor: pointer;
+  }
+
+  .grid-item:hover .grid-title {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .grid-thumb {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    font-size: 11px;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .grid-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .grid-thumb .placeholder-text {
+    position: absolute;
+    font-size: 10px;
+    color: var(--gray);
+    text-align: center;
+    padding: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .grid-title {
+    font-size: 12px;
+    color: var(--black);
+    line-height: 1.4;
+  }
+
+  .grid-meta {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--black);
+    font-size: 11px;
+    color: var(--gray);
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  footer a {
+    color: var(--gray);
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    body { padding: 1.5rem 1.25rem; }
+    .header-name { font-size: 1.6rem; }
+    .projects-table td.kind,
+    .projects-table td.client { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="header-name"><a href="#about">Il Tuo Nome</a></h1>
+  <p class="header-tagline">
+    Design, <a href="#art-direction">direzione artistica,</a> <a href="#altro">ecc.</a>
+  </p>
+</header>
+
+<nav class="view-toggle" aria-label="Cambia vista">
+  <a href="#" class="active" id="btn-list" onclick="setView('list', event)">.lista</a>
+  <a href="#" id="btn-grid" onclick="setView('grid', event)">.immagini</a>
+</nav>
+
+<!-- ── VISTA LISTA ── -->
+<div id="view-list">
+  <table class="projects-table" aria-label="Progetti">
+    <thead>
+      <tr>
+        <th>Titolo</th>
+        <th>Tipo</th>
+        <th>Cliente</th>
+        <th>Anno</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <!-- i progetti vengono generati da JS -->
+    </tbody>
+  </table>
+</div>
+
+<!-- ── VISTA GRIGLIA ── -->
+<div id="view-grid">
+  <div class="projects-grid" id="grid-body">
+    <!-- le card vengono generate da JS -->
+  </div>
+</div>
+
+<footer>
+  <a href="mailto:tua@email.com">email</a>
+  <a href="https://instagram.com/" target="_blank">instagram</a>
+  <a href="https://linkedin.com/" target="_blank">linkedin</a>
+  <span>© 2025 Il Tuo Nome</span>
+</footer>
+
+<script>
+  /* ════════════════════════════════════════════
+     DATI PROGETTI — modifica questa sezione!
+     Per ogni progetto:
+       title:  nome del progetto
+       url:    link alla pagina del progetto (o '#')
+       kind:   tipo di lavoro
+       client: cliente
+       year:   anno
+       thumb:  percorso immagine (opzionale)
+  ════════════════════════════════════════════ */
+  const projects = [
+    {
+      title: "Identità visiva — Studio Alfa",
+      url: "#",
+      kind: "Brand identity",
+      client: "Studio Alfa",
+      year: "2024",
+      thumb: ""
+    },
+    {
+      title: "Copertina album — Notte Silenziosa",
+      url: "#",
+      kind: "Album art (Design, illustrazione)",
+      client: "Indie Label",
+      year: "2024",
+      thumb: ""
+    },
+    {
+      title: "Rivista — Numero 3",
+      url: "#",
+      kind: "Rivista (Design, direzione artistica)",
+      client: "Rivista Forma",
+      year: "2023",
+      thumb: ""
+    },
+    {
+      title: "Poster — Evento Culturale",
+      url: "#",
+      kind: "Poster (Design, illustrazione)",
+      client: "Comune di Milano",
+      year: "2023",
+      thumb: ""
+    },
+    {
+      title: "Copertina libro — L'Altra Parte",
+      url: "#",
+      kind: "Copertina libro",
+      client: "Editore Mondo",
+      year: "2022",
+      thumb: ""
+    },
+    {
+      title: "Sito web — Galleria Spazio",
+      url: "#",
+      kind: "Sito web (Design, codice)",
+      client: "Galleria Spazio",
+      year: "2022",
+      thumb: ""
+    },
+    {
+      title: "Identità — Festival del Cinema",
+      url: "#",
+      kind: "Brand identity, collateral",
+      client: "Festival del Cinema Corto",
+      year: "2021",
+      thumb: ""
+    },
+    {
+      title: "Zine — Forme Urbane",
+      url: "#",
+      kind: "Zine (Design, fotografia)",
+      client: "Autoproduzione",
+      year: "2021",
+      thumb: ""
+    },
+    {
+      title: "Logotipo — Caffè Nuvola",
+      url: "#",
+      kind: "Logo",
+      client: "Caffè Nuvola",
+      year: "2020",
+      thumb: ""
+    },
+    {
+      title: "Feature — Magazine",
+      url: "#",
+      kind: "Feature (Design, foto-illustrazione)",
+      client: "Rivista Luce",
+      year: "2020",
+      thumb: ""
+    },
+    {
+      title: "Campagna — Collezione Estate",
+      url: "#",
+      kind: "Direzione artistica, grafica",
+      client: "Brand Moda",
+      year: "2019",
+      thumb: ""
+    },
+    {
+      title: "Progetto di tesi — Segni e Vuoti",
+      url: "#",
+      kind: "Progetto di tesi",
+      client: "",
+      year: "2019",
+      thumb: ""
+    },
+  ];
+
+  /* ── GENERA TABELLA ── */
+  function buildTable() {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = projects.map(p => `
+      <tr>
+        <td class="title"><a href="${p.url}">${p.title}</a></td>
+        <td class="kind">${p.kind}</td>
+        <td class="client">${p.client}</td>
+        <td class="year">${p.year}</td>
+      </tr>
+    `).join('');
+  }
+
+  /* ── GENERA GRIGLIA ── */
+  function buildGrid() {
+    const grid = document.getElementById('grid-body');
+    grid.innerHTML = projects.map(p => `
+      <div class="grid-item" onclick="location.href='${p.url}'">
+        <div class="grid-thumb">
+          ${p.thumb
+            ? `<img src="${p.thumb}" alt="${p.title}">`
+            : `<span class="placeholder-text">${p.title}</span>`
+          }
+        </div>
+        <div class="grid-title">${p.title}</div>
+        <div class="grid-meta">${p.client}${p.client && p.year ? ', ' : ''}${p.year}</div>
+      </div>
+    `).join('');
+  }
+
+  /* ── CAMBIO VISTA ── */
+  function setView(view, e) {
+    e && e.preventDefault();
+    const isList = view === 'list';
+    document.getElementById('view-list').style.display = isList ? 'block' : 'none';
+    document.getElementById('view-grid').style.display = isList ? 'none' : 'block';
+    document.getElementById('btn-list').classList.toggle('active', isList);
+    document.getElementById('btn-grid').classList.toggle('active', !isList);
+  }
+
+  /* ── INIT ── */
+  buildTable();
+  buildGrid();
+</script>
+
+</body>
+</html>
