@@ -256,58 +256,22 @@
 <body>
 
 <header>
-  <h1 class="header-name"><a href="#about">Il Tuo Nome</a></h1>
+  <h1 class="header-name"><a href="#about">Chiara Santopietro</a></h1>
   <p class="header-tagline">
-    Design, <a href="#art-direction">direzione artistica,</a> <a href="#altro">ecc.</a>
+    Art director, <a href="#graphic-design">graphic designer,</a> <a href="#altro">ecc.</a>
   </p>
 </header>
 
-<nav class="view-toggle" aria-label="Cambia vista">
-  <a href="#" class="active" id="btn-list" onclick="setView('list', event)">.lista</a>
-  <a href="#" id="btn-grid" onclick="setView('grid', event)">.immagini</a>
-</nav>
-
-<!-- ── VISTA LISTA ── -->
-<div id="view-list">
-  <table class="projects-table" aria-label="Progetti">
-    <thead>
-      <tr>
-        <th>Titolo</th>
-        <th>Tipo</th>
-        <th>Cliente</th>
-        <th>Anno</th>
-      </tr>
-    </thead>
-    <tbody id="table-body">
-      <!-- i progetti vengono generati da JS -->
-    </tbody>
-  </table>
-</div>
-
-<!-- ── VISTA GRIGLIA ── -->
-<div id="view-grid">
-  <div class="projects-grid" id="grid-body">
-    <!-- le card vengono generate da JS -->
-  </div>
-</div>
-
-<footer>
+<footer style="margin-top: -2rem; border-top: none; margin-bottom: 3rem;">
   <a href="mailto:tua@email.com">email</a>
   <a href="https://instagram.com/" target="_blank">instagram</a>
   <a href="https://linkedin.com/" target="_blank">linkedin</a>
-  <span>© 2025 Il Tuo Nome</span>
+  <span>© 2025 Chiara Santopietro</span>
 </footer>
 
 <script>
   /* ════════════════════════════════════════════
-     DATI PROGETTI — modifica questa sezione!
-     Per ogni progetto:
-       title:  nome del progetto
-       url:    link alla pagina del progetto (o '#')
-       kind:   tipo di lavoro
-       client: cliente
-       year:   anno
-       thumb:  percorso immagine (opzionale)
+     DATI PROGETTI — Tutti i tuoi lavori originali
   ════════════════════════════════════════════ */
   const projects = [
     {
@@ -411,6 +375,7 @@
   /* ── GENERA TABELLA ── */
   function buildTable() {
     const tbody = document.getElementById('table-body');
+    if(!tbody) return; // Protezione se la tabella è nascosta dai commenti
     tbody.innerHTML = projects.map(p => `
       <tr>
         <td class="title"><a href="${p.url}">${p.title}</a></td>
@@ -424,6 +389,7 @@
   /* ── GENERA GRIGLIA ── */
   function buildGrid() {
     const grid = document.getElementById('grid-body');
+    if(!grid) return; // Protezione se la griglia è nascosta dai commenti
     grid.innerHTML = projects.map(p => `
       <div class="grid-item" onclick="location.href='${p.url}'">
         <div class="grid-thumb">
@@ -442,10 +408,15 @@
   function setView(view, e) {
     e && e.preventDefault();
     const isList = view === 'list';
-    document.getElementById('view-list').style.display = isList ? 'block' : 'none';
-    document.getElementById('view-grid').style.display = isList ? 'none' : 'block';
-    document.getElementById('btn-list').classList.toggle('active', isList);
-    document.getElementById('btn-grid').classList.toggle('active', !isList);
+    const listEl = document.getElementById('view-list');
+    const gridEl = document.getElementById('view-grid');
+    if(listEl) listEl.style.display = isList ? 'block' : 'none';
+    if(gridEl) gridEl.style.display = isList ? 'none' : 'block';
+    
+    const btnList = document.getElementById('btn-list');
+    const btnGrid = document.getElementById('btn-grid');
+    if(btnList) btnList.classList.toggle('active', isList);
+    if(btnGrid) btnGrid.classList.toggle('active', !isList);
   }
 
   /* ── INIT ── */
